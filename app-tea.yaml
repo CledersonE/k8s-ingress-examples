@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: apptea
+  name: apptea
+spec:
+  selector:
+    matchLabels:
+      app: apptea
+  template:
+    metadata:
+      labels:
+        app: apptea
+    spec:
+      containers:
+      - image: pleshakov/tea
+        name: apptea
+        ports:
+        - containerPort: 8080
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: apptea
+spec:
+  selector:
+    app: apptea
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+

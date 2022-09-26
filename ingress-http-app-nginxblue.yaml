@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-http-app-nginxblue
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: nginxblue.clederson.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginxhello-blue
+            port:
+              number: 80

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-tls-app-nginx-red
+  annotations: 
+    cert-manager.io/cluster-issuer: letsencrypt
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+      - tlsred.clederson.com
+    secretName: tlsred-secret
+  rules:
+  - host: tlsred.clederson.com
+    http:
+      paths:
+        - backend:
+            service:
+              name: nginxhello-red
+              port:
+                number: 80
+          path: /
+          pathType: Prefix
